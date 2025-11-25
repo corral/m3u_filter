@@ -1,0 +1,4 @@
+name: M3U Filter Add-ons
+maintainer: Tu Nombre <tu@correo.com>
+addons:
+  - m3u_filter
