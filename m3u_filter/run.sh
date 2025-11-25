@@ -14,9 +14,13 @@ if bashio::config.exists 'm3u_url'; then
     export m3u_url=${m3u_url}
 fi
 
-echo $JSON_CONF | tempio \
-    -template /etc/nginx/nginx.conf \
-    -out /usr/local/openresty/nginx/conf/nginx.conf
+if bashio::config.exists 'filtro_group'; then
+    lang=$(bashio::config 'filtro_group')
+    bashio::log.info "Setting filtro_group to ${filtro_group}..."
+    export filtro_group=${filtro_group}
+fi
+
+
 
 # Ejecutar OpenResty en primer plano y mostrar logs
 bashio::log.info "Running nginx..."
