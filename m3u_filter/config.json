@@ -1,0 +1,21 @@
+{
+  "name": "M3U Filter",
+  "version": "1.0",
+  "slug": "m3u_filter",
+  "description": "OpenResty add-on para filtrar listas M3U por group-title",
+  "arch": ["armv7", "aarch64", "amd64"],
+  "startup": "application",
+  "boot": "auto",
+  "host_network": true,
+  "ports": {
+    "8080/tcp": 8080
+  },
+  "options": {
+    "m3u_url": "",
+    "group_filter": "ES|"
+  },
+  "schema": {
+    "m3u_url": "str",
+    "group_filter": "str"
+  }
+}
