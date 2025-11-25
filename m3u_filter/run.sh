@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/with-contenv bashio
 bashio::log.info "Iniciando M3U Filter..."
 bashio::log.info "Merging options & variables for template"
 # shellcheck disable=SC2046
