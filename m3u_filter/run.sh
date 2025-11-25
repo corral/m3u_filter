@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-bashio::log.info "Iniciando OpenResty..."
+bashio::log.info "Iniciando M3U Filter..."
 bashio::log.info "Merging options & variables for template"
 # shellcheck disable=SC2046
 JSON_CONF=$(jq --arg port $(bashio::core.port) \
