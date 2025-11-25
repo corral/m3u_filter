@@ -5,7 +5,7 @@ RUN apk add --no-cache git curl build-base
 
 # Copiar scripts y configuración
 COPY run.sh /run.sh
-COPY nginx.conf /etc/nginx/conf/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copiar lua-resty-http
 COPY resty /usr/local/openresty/lualib/resty
