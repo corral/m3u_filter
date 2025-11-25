@@ -1,27 +1,25 @@
-#!/usr/bin/with-contenv bashio
-bashio::log.info "Iniciando M3U Filter..."
-bashio::log.info "Merging options & variables for template"
-# shellcheck disable=SC2046
-JSON_CONF=$(jq --arg port $(bashio::core.port) \
-    '({options: .}) + ({variables: {port: $port}})' \
-    /data/options.json)
-bashio::log.info "Generating nginx.conf from template in /etc/nginx/nginx.conf.gtpl"
+#!/usr/bin/env sh
+echo  "Iniciando M3U Filter..."
+echo  "Merging options & variables for template"
 
-
-if bashio::config.exists 'm3u_url'; then
-    lang=$(bashio::config 'm3u_url')
-    bashio::log.info "Setting m3u_url to ${m3u_url}..."
-    export m3u_url=${m3u_url}
+# Comprobar si existe options.json
+if [ ! -f /data/options.json ]; then
+    echo "ERROR: /data/options.json no existe"
+    exit 1
 fi
 
-if bashio::config.exists 'filtro_group'; then
-    lang=$(bashio::config 'filtro_group')
-    bashio::log.info "Setting filtro_group to ${filtro_group}..."
-    export filtro_group=${filtro_group}
-fi
+# Leer valores del archivo JSON
+M3U_URL=$(jq -r '.m3u_url // empty' /data/options.json)
+GROUP_FILTER=$(jq -r '.group_filter // empty' /data/options.json)
 
+# Exportar variables de entorno para que Nginx/Lua puedan usarlas
+export M3U_URL
+export GROUP_FILTER
+
+echo "M3U_URL = $M3U_URL"
+echo "GROUP_FILTER = $GROUP_FILTER"
 
 
 # Ejecutar OpenResty en primer plano y mostrar logs
-bashio::log.info "Running nginx..."
+echo "Running nginx..."
 openresty -g 'daemon off;' -c /usr/local/openresty/nginx/conf/nginx.conf
