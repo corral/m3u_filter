@@ -6,7 +6,14 @@ JSON_CONF=$(jq --arg port $(bashio::core.port) \
     '({options: .}) + ({variables: {port: $port}})' \
     /data/options.json)
 bashio::log.info "Generating nginx.conf from template in /etc/nginx/nginx.conf.gtpl"
-# shellcheck disable=SC2086
+
+
+if bashio::config.exists 'm3u_url'; then
+    lang=$(bashio::config 'm3u_url')
+    bashio::log.info "Setting m3u_url to ${m3u_url}..."
+    export m3u_url=${m3u_url}
+fi
+
 echo $JSON_CONF | tempio \
     -template /etc/nginx/nginx.conf \
     -out /usr/local/openresty/nginx/conf/nginx.conf
