@@ -1,5 +1,5 @@
 FROM openresty/openresty:alpine
-
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Instalar git (si quieres usar git dentro del contenedor, opcional)
 RUN apk add --no-cache git curl build-base
 
