@@ -8,7 +8,7 @@ JSON_CONF=$(jq --arg port $(bashio::core.port) \
 bashio::log.info "Generating nginx.conf from template in /etc/nginx/nginx.conf.gtpl"
 # shellcheck disable=SC2086
 echo $JSON_CONF | tempio \
-    -template /etc/nginx/nginx.conf.gtpl \
+    -template /etc/nginx/nginx.conf \
     -out /usr/local/openresty/nginx/conf/nginx.conf
 
 # Ejecutar OpenResty en primer plano y mostrar logs
