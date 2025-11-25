@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
-# Inicia OpenResty
 echo "Iniciando OpenResty..."
-openresty -g 'daemon off;'
+
+# Ejecutar OpenResty en primer plano y mostrar logs
+openresty -g 'daemon off;' -c /usr/local/openresty/nginx/conf/nginx.conf
