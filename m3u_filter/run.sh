@@ -1,5 +1,16 @@
 #!/usr/bin/env sh
-echo "Iniciando OpenResty..."
+bashio::log.info "Iniciando OpenResty..."
+bashio::log.info "Merging options & variables for template"
+# shellcheck disable=SC2046
+JSON_CONF=$(jq --arg port $(bashio::core.port) \
+    '({options: .}) + ({variables: {port: $port}})' \
+    /data/options.json)
+bashio::log.info "Generating nginx.conf from template in /etc/nginx/nginx.conf.gtpl"
+# shellcheck disable=SC2086
+echo $JSON_CONF | tempio \
+    -template /etc/nginx/nginx.conf.gtpl \
+    -out /usr/local/openresty/nginx/conf/nginx.conf
 
 # Ejecutar OpenResty en primer plano y mostrar logs
+bashio::log.info "Running nginx..."
 openresty -g 'daemon off;' -c /usr/local/openresty/nginx/conf/nginx.conf
